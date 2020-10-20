@@ -1,18 +1,16 @@
 package com.mw.cc.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Value;
-
-import java.math.BigDecimal;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Value
-@AllArgsConstructor
+@Data
+@NoArgsConstructor
 public class Currency {
 
-  String currency;
-  String code;
-  BigDecimal mid;
+  private String currency;
+  private String code;
+  private Double mid;
 
 }

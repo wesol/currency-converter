@@ -1,37 +1,40 @@
 package com.mw.cc.service.currencyProviders;
 
+import com.mw.cc.dto.Currencies;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 
 @Service
 public class CurrencyProviderNbp implements CurrencyProvider {
 
-  private final RestTemplate restController;
+  private final RestTemplate restTemplate;
 
-  private final List<Object> currencies;
+  private final Map<String, BigDecimal> currencies;
 
   @Value("${nbp.currency.url}")
   private String url;
 
-  public CurrencyProviderNbp(RestTemplate restController, List<Object> currencies) {
-    this.restController = restController;
+  public CurrencyProviderNbp(RestTemplate restController) {
+    this.restTemplate = restController;
 
-    //todo do object for response
-    //todo do objects for element of the list
+    Currencies currenciesObject = restController.getForObject(url, Currencies.class);
+    Map<String, BigDecimal> currenciesMap = new HashMap<>();
 
-    Object[] forObject = restController.getForObject(url, Object[].class); //todo - wrapper and to map
+    if (currenciesObject != null) {
+      currenciesObject.getCurrencies().forEach(currency -> currenciesMap.put(currency.getCode(), currency.getMid()));
+    }
 
-    this.currencies = currencies;
+    this.currencies = currenciesMap;
   }
 
   @Override
   public Map<String, BigDecimal> getCurrencies() {
-    return null;
+    return currencies;
   }
 }

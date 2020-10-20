@@ -28,7 +28,7 @@ public class ConvertCurrencyController {
   @GetMapping("/") //todo remove after
   public String test(){
 
-    Map<String, BigDecimal> currencies = currencyProvider.getCurrencies();
+    Map<String, Double> currencies = currencyProvider.getCurrencies();
     return "ok";
   }
 }

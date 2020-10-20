@@ -4,5 +4,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public interface CurrencyProvider {
+   void refreshCurrencies();
+
    Map<String, BigDecimal> getCurrencies();
 }

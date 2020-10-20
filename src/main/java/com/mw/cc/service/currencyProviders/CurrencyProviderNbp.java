@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class CurrencyProviderNbp implements CurrencyProvider {
 
   private final RestTemplate restTemplate;
 
-  private final Map<String, Double> currencies;
+  private final Map<String, BigDecimal> currencies;
 
   private final String url;
 
@@ -26,14 +27,14 @@ public class CurrencyProviderNbp implements CurrencyProvider {
     this.restTemplate = restTemplate;
     this.url = url;
 
-    Map<String, Double> currenciesMap = new HashMap<>();
+    Map<String, BigDecimal> currenciesMap = new HashMap<>();
 
     fillCurrenciesMap(currenciesMap);
 
     this.currencies = currenciesMap;
   }
 
-  private void fillCurrenciesMap(Map<String, Double> currenciesMap) {
+  private void fillCurrenciesMap(Map<String, BigDecimal> currenciesMap) {
 
     Currencies[] currenciesArray = null;
     try {
@@ -51,7 +52,7 @@ public class CurrencyProviderNbp implements CurrencyProvider {
   }
 
   @Override
-  public Map<String, Double> getCurrencies() {
+  public Map<String, BigDecimal> getCurrencies() {
     return currencies;
   }
 }
